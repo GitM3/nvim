@@ -15,18 +15,24 @@ _: {
       };
 
       keymaps = {
-        send_line = "<space>sl";
-        send_motion = "<space>sc";
-        visual_send = "<space>sc";
-        send_file = "<space>sf";
-        send_mark = "<space>sm";
+        send_line = "<space>il";
+        send_motion = "<space>ic";
+        visual_send = "<space>ic";
+        send_file = "<space>if";
+        send_mark = "<space>im";
+        send_paragraph = "<space>ip";
+        send_until_cursor = "<space>iu";
+
         mark_motion = "<space>mc";
         mark_visual = "<space>mc";
         remove_mark = "<space>md";
-        cr = "<space>s<cr>";
-        interrupt = "<space>s<space>";
-        exit = "<space>sq";
-        clear = "<space>cl";
+        cr = "<space>i<cr>";
+        interrupt = "<space>i<space>";
+        exit = "<space>iq";
+        clear = "<space>il";
+        restart_repl = "<space>ir";
+        toggle_repl = "<space>ii";
+
       };
 
       repl_definition = {
@@ -41,8 +47,11 @@ _: {
         };
       };
 
-      repl_open_cmd = {
-        __raw = "require(\"iron.view\").bottom(40)";
+      # repl_open_cmd = {
+      #   __raw = ''require("iron.view").split.vertical.botright("40%")'';
+      # };
+      config = {
+        repl_open_cmd = "vertical botright 70%split";
       };
 
       scratch_repl = true;
