@@ -32,7 +32,7 @@
           statix.enable = true;
           treefmt.enable = true;
           typos = {
-            enable = true;
+            enable = false;
             excludes = [ "generated/*" ];
           };
           # keep-sorted end

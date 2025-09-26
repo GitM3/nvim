@@ -1,83 +1,53 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
-}:
-{
-  keymaps = lib.optionals config.plugins.iron.enable [
-    {
-      key = "<leader>ir";
-      action = "<cmd>IronRepl<cr>";
-      mode = "n";
-      options = {
-        desc = "Open REPL";
-      };
-    }
-    {
-      key = "<leader>iR";
-      action = "<cmd>IronReplHere<cr>";
-      mode = "n";
-      options = {
-        desc = "Open REPL here";
-      };
-    }
-  ];
+_: {
+  # iron.nvim base configuration
+  plugins.iron = {
+    enable = true;
 
-  plugins = {
-    iron = {
-      enable = true;
-
-      lazyLoad.settings.cmd = [
-        "IronRepl"
-        "IronReplHere"
-      ];
-
-      settings = {
-        scratch_repl = true;
-        repl_definition = {
-          python = {
-            command = [ "${lib.getExe pkgs.python3}" ];
-            format.__raw = ''
-              require("iron.fts.common").bracketed_paste_python
-            '';
-          };
-          nix = {
-            command = [
-              "nix"
-              "repl"
-            ];
-          };
-        };
-        keymaps = {
-          send_motion = "<leader>im";
-          visual_send = "<leader>iv";
-          send_file = "<leader>if";
-          send_line = "<leader>il";
-          send_paragraph = "<leader>ip";
-          send_until_cursor = "<leader>iu";
-          send_mark = "<leader>is";
-          mark_motion = "<leader>ic";
-          mark_visual = "<leader>ic";
-          remove_mark = "<leader>id";
-          cr = "<leader>i<cr>";
-          interrupt = "<leader>i<space>";
-          exit = "<leader>iq";
-          clear = "<leader>iC";
-        };
-        highlight = {
-          italic = true;
-        };
-        ignore_blank_lines = true;
-      };
+    # Keep consistent with repo's lazy-load convention
+    lazyLoad.settings = {
+      event = [ "DeferredUIEnter" ];
     };
 
-    which-key.settings.spec = [
-      {
-        __unkeyed-1 = "<leader>i";
-        group = "REPL (Iron)";
-        icon = "󱠥";
-      }
-    ];
+    # Options passed to require('iron.core').setup
+    settings = {
+      highlight = {
+        italic = true;
+      };
+
+      keymaps = {
+        send_line = "<space>sl";
+        send_motion = "<space>sc";
+        visual_send = "<space>sc";
+        send_file = "<space>sf";
+        send_mark = "<space>sm";
+        mark_motion = "<space>mc";
+        mark_visual = "<space>mc";
+        remove_mark = "<space>md";
+        cr = "<space>s<cr>";
+        interrupt = "<space>s<space>";
+        exit = "<space>sq";
+        clear = "<space>cl";
+      };
+
+      repl_definition = {
+        python = {
+          command = [ "python3" ];
+          format = {
+            __raw = "require('iron.fts.common').bracketed_paste_python";
+          };
+        };
+        sh = {
+          command = [ "zsh" ];
+        };
+      };
+
+      repl_open_cmd = {
+        __raw = "require(\"iron.view\").bottom(40)";
+      };
+
+      scratch_repl = true;
+
+      ignore_blank_lines = true;
+    };
   };
 }
