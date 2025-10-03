@@ -1,4 +1,5 @@
-_: {
+{ config, lib, ... }:
+{
   # iron.nvim base configuration
   plugins.iron = {
     enable = true;
@@ -38,20 +39,28 @@ _: {
       repl_definition = {
         python = {
           command = [ "python3" ];
-          format = {
-            __raw = "require('iron.fts.common').bracketed_paste_python";
+          format.__raw = "require('iron.fts.common').bracketed_paste_python";
+          env = {
+            PYTHON_BASIC_REPL = "1";
           };
+          block_dividers = [
+            "# %%"
+            "#%%"
+          ];
         };
         sh = {
           command = [ "zsh" ];
         };
+        env = {
+          PYTHON_BASIC_REPL = "1";
+        };
+
       };
 
-      # repl_open_cmd = {
-      #   __raw = ''require("iron.view").split.vertical.botright("40%")'';
-      # };
       config = {
-        repl_open_cmd = "vertical botright 70%split";
+        repl_open_cmd = {
+          __raw = ''require("iron.view").split.vertical.botright("40%")'';
+        };
       };
 
       scratch_repl = true;
@@ -59,4 +68,12 @@ _: {
       ignore_blank_lines = true;
     };
   };
+  # which-key group for Obsidian
+  plugins.which-key.settings.spec = lib.optionals config.plugins.obsidian.enable [
+    {
+      __unkeyed-1 = "<leader>i";
+      group = "Iron REPL";
+      icon = "󱃖";
+    }
+  ];
 }
