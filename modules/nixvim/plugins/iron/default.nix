@@ -38,7 +38,11 @@
 
       repl_definition = {
         python = {
-          command = [ "python3" ];
+          command = [
+            "env"
+            "PYTHON_BASIC_REPL=1"
+            "python3"
+          ];
           format.__raw = "require('iron.fts.common').bracketed_paste_python";
           env = {
             PYTHON_BASIC_REPL = "1";
@@ -50,9 +54,6 @@
         };
         sh = {
           command = [ "zsh" ];
-        };
-        env = {
-          PYTHON_BASIC_REPL = "1";
         };
 
       };

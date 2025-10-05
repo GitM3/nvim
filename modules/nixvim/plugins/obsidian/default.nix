@@ -37,7 +37,7 @@
         nvim_cmp = false;
         min_chars = 2;
       };
-
+      disable_frontmatter = true;
       # Use Neovim statusline instead of Obsidian UI
       ui.enable = false;
     };
